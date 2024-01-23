@@ -18,7 +18,8 @@ const post = {
     },
   ],
   ui: {
-    router: ({ document }) => `edit/blog/${document._sys.filename}`,
+    // This is an DEMO router. You can remove this to fit your site
+    router: ({ document }) => `/edit/blog/${document._sys.filename}`,
   },
 };
 
