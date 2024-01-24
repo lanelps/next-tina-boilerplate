@@ -1,11 +1,12 @@
 import { tinaField } from "tinacms/dist/react";
 
 import ContentSection from "../components/blog/ContentSection";
+import Blocks from "../components/blog/Blocks";
 
 const BlogTemplate = ({ data }) => {
   if (!data) return <></>;
 
-  const { title, body } = data?.post;
+  const { title, body, sections } = data?.post;
 
   return (
     <div>
@@ -20,7 +21,8 @@ const BlogTemplate = ({ data }) => {
         >
           {title}
         </h1>
-        <ContentSection content={body}></ContentSection>
+        <ContentSection content={body} />
+        <Blocks blocks={sections} />
       </div>
       <div className="text-center bg-green-100">
         Lost and looking for a place to start?
