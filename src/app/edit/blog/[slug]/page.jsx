@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTina } from "tinacms/dist/react";
 
 import BlogTemplate from "../../../../templates/Blog";

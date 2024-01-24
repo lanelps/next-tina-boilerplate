@@ -32,6 +32,7 @@ export default defineConfig({
         name: "post",
         label: "Posts",
         path: "content/posts",
+        format: "mdx",
         fields: [
           {
             type: "string",
@@ -41,16 +42,55 @@ export default defineConfig({
             required: true,
           },
           {
+            name: "author",
+            label: "Author",
+            type: "reference",
+            collections: ["author"],
+          },
+          {
             type: "rich-text",
             name: "body",
             label: "Body",
             isBody: true,
+            templates: [
+              {
+                name: "NewsletterSignup",
+                label: "Newsletter Signup",
+                fields: [
+                  {
+                    name: "children",
+                    label: "CTA",
+                    type: "rich-text",
+                  },
+                  {
+                    name: "buttonText",
+                    label: "Button Text",
+                    type: "string",
+                  },
+                ],
+              },
+            ],
           },
         ],
         ui: {
           // This is an DEMO router. You can remove this to fit your site
           router: ({ document }) => `/edit/blog/${document._sys.filename}`,
         },
+      },
+      {
+        name: "author",
+        label: "Authors",
+        path: "content/authors",
+        format: "md",
+        fields: [
+          {
+            type: "string",
+            name: "name",
+            label: "Name",
+            isTitle: true,
+            required: true,
+          },
+        ],
       },
     ],
   },

@@ -1,3 +1,5 @@
+import { tinaField } from "tinacms/dist/react";
+
 import ContentSection from "../components/blog/ContentSection";
 
 const BlogTemplate = ({ data }) => {
@@ -12,7 +14,10 @@ const BlogTemplate = ({ data }) => {
           textAlign: "center",
         }}
       >
-        <h1 className="m-8 text-3xl font-extrabold leading-8 tracking-tight text-center text-gray-900 sm:text-4xl">
+        <h1
+          className="m-8 text-3xl font-extrabold leading-8 tracking-tight text-center text-gray-900 sm:text-4xl"
+          data-tina-field={tinaField(data, "title")}
+        >
           {title}
         </h1>
         <ContentSection content={body}></ContentSection>
