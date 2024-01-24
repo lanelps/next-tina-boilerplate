@@ -1,8 +1,8 @@
 import React from "react";
 
-import Content from "../blocks/content";
-import Features from "../blocks/features";
-import Hero from "../blocks/hero";
+import Content from "../blocks/Content";
+import Features from "../blocks/Features";
+import Hero from "../blocks/Hero";
 // import { Testimonial } from "./blocks/testimonial";
 
 const Blocks = ({ blocks }) => (
