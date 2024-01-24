@@ -7,11 +7,14 @@ const CanvasComponent = (props) => {
   const { input, field } = props;
   console.log(props);
 
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const generateRandomArt = () => {
     const canvas = canvasRef.current;
+    if (!canvas) return; // Add null check
+
     const ctx = canvas.getContext("2d");
+    if (!ctx) return; // Add null check for ctx
 
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -33,6 +36,8 @@ const CanvasComponent = (props) => {
 
   const saveImage = () => {
     const canvas = canvasRef.current;
+    if (!canvas) return; // Add null check
+
     const dataUrl = canvas.toDataURL("image/png");
 
     input.onChange(dataUrl);
