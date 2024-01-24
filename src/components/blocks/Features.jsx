@@ -3,6 +3,7 @@ import React from "react";
 const Features = ({ data }) => {
   return (
     <section className="p-4 bg-blue-300">
+      <h3 className="text-xl font-bold">Features section</h3>
       <ul className="space-y-4">
         {data.items.map((item, i) => (
           <li
