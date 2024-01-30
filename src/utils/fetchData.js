@@ -22,3 +22,24 @@ export const getBlogPostData = async (slug) => {
     query: query,
   };
 };
+
+export const getReviewData = async (slug) => {
+  let data = {};
+  let query = {};
+  let variables = { relativePath: `${slug}.mdx` };
+  try {
+    const res = await client.queries.review(variables);
+    query = res.query;
+    data = res.data;
+    variables = res.variables;
+  } catch (error) {
+    console.error(error);
+    notFound();
+  }
+
+  return {
+    variables: variables,
+    data: data,
+    query: query,
+  };
+};
