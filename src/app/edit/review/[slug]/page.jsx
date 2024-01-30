@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTina } from "tinacms/dist/react";
 
 import ReviewTemplate from "../../../../templates/Review";
-import { getReviewPostData } from "../../../../utils/fetchData";
+import { getReviewData } from "../../../../utils/fetchData";
 
 const Review = ({ params }) => {
   const [reviewData, setReviewData] = useState(null);
@@ -18,7 +18,7 @@ const Review = ({ params }) => {
 
   useEffect(() => {
     const fetchReviewData = async () => {
-      const data = await getReviewPostData(params.slug);
+      const data = await getReviewData(params.slug);
       setReviewData(data);
     };
 

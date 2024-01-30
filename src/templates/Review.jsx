@@ -6,7 +6,7 @@ import Blocks from "../components/blog/Blocks";
 const ReviewTemplate = ({ data }) => {
   if (!data) return <></>;
 
-  const { title, body, sections } = data?.post;
+  const { title, body, sections } = data?.review;
 
   return (
     <div>
