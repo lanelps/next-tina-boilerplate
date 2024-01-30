@@ -5,6 +5,7 @@ export const getBlogPostData = async (slug) => {
   let data = {};
   let query = {};
   let variables = { relativePath: `${slug}.mdx` };
+
   try {
     const res = await client.queries.post(variables);
     query = res.query;
