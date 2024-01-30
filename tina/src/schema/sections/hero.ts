@@ -22,6 +22,11 @@ export const heroBlock: TinaTemplate = {
       name: "headline",
     },
     {
+      name: 'heroImage',
+      type: 'image',
+      label: 'Hero Image',
+     },
+    {
       type: "string",
       label: "Text",
       name: "text",
