@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "netlify/plugins/index-algolia/index.js"  ],
   "exclude": [
     "node_modules"
   ]
