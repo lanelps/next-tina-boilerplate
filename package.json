@@ -20,6 +20,7 @@
     "tinacms": "^1.5.28"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^4.41.3",
     "@tinacms/cli": "^1.5.39",
     "@types/node": "^20.11.10",
     "autoprefixer": "^10.4.17",
