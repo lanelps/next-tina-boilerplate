@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import algoliasearch from "algoliasearch/lite";
+import React, { useState, useEffect } from "react";
+import algoliasearch from "algoliasearch";
 import { SearchBox } from "react-instantsearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
 
@@ -11,7 +11,13 @@ const searchClient = algoliasearch(
 );
 
 const Search = () => {
-  return (
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  return isMounted ? (
     <div className="text-black">
       <InstantSearchNext
         indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME}
@@ -21,7 +27,7 @@ const Search = () => {
         {/* other widgets */}
       </InstantSearchNext>
     </div>
-  );
+  ) : null;
 };
 
 export default Search;

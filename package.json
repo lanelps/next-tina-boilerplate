@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "NODE_ENV=development TINA_PUBLIC_IS_LOCAL=true tinacms dev -c \"next dev\"",
     "build": "NODE_ENV=production tinacms build && next build",
-    "postbuild": "NODE_ENV=production node ./scripts/index-algolia.js",
-    "indexalgolia": "NODE_ENV=development node ./scripts/index-algolia.js",
+    "postbuild": "NODE_ENV=production",
+    "indexalgolia": "NODE_ENV=development",
     "start": "next start",
     "lint": "next lint"
   },
@@ -19,6 +19,7 @@
     "tinacms": "^1.5.28"
   },
   "devDependencies": {
+    "@netlify/functions": "^2.5.1",
     "@tinacms/cli": "^1.5.39",
     "@types/node": "^20.11.10",
     "algoliasearch": "^4.22.1",

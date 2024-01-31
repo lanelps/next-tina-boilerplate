@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
-import algoliasearch from "algoliasearch/lite";
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import algoliasearch from "algoliasearch";
 import { InstantSearchNext } from "react-instantsearch-nextjs";
 import { Hits } from "react-instantsearch";
 
@@ -11,18 +12,30 @@ const searchClient = algoliasearch(
 );
 
 const Hit = ({ hit }) => {
-  return <li>{JSON.stringify(hit)}</li>;
+  return (
+    <li>
+      <Link href={hit.objectID.replace("content", "").replace(".mdx", "")}>
+        {hit.title}
+      </Link>
+    </li>
+  );
 };
 
 const Results = () => {
-  return (
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  return isMounted ? (
     <InstantSearchNext
       indexName={process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME}
       searchClient={searchClient}
     >
       <Hits hitComponent={Hit} />
     </InstantSearchNext>
-  );
+  ) : null;
 };
 
 export default Results;
