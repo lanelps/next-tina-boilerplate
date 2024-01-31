@@ -98,11 +98,14 @@ export const onPostBuild = async () => {
 
     // check the output of the response in the console
     console.log(
-      `🎉 Sucessfully added ${
-        algoliaResponse.objectIDs.length
-      } records to Algolia search. Object IDs:\n${algoliaResponse.objectIDs.join(
-        "\n"
-      )}`
+      `🎉 Sucessfully added ${algoliaResponse.objectIDs.length} record${
+        algoliaResponse.objectIDs.length > 1 ? `s` : ``
+      } to Algolia search.
+      
+      Object IDs: [
+        ${algoliaResponse.objectIDs.join(",\n")}
+      ]
+      `
     );
   } catch (error) {
     console.error("Failed to index new content to Algolia:", error);
