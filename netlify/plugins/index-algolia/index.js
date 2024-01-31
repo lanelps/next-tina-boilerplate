@@ -72,7 +72,6 @@ const getAllBlogPosts = async () => {
 export const onPostBuild = async () => {
   try {
     const posts = await getAllBlogPosts();
-    console.log(`posts`, posts);
 
     // initialize the client with your environment variables
     const algoliaClient = algoliasearch(
