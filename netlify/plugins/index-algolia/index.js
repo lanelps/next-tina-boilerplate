@@ -9,9 +9,9 @@ dotenv.config({
 
 const MY_BRANCH = "main";
 
-if (process.env.NEXT_PUBLIC_TINA_CLIENT_ID || process.env.TINA_TOKEN) {
+if (!process.env.NEXT_PUBLIC_TINA_CLIENT_ID || !process.env.TINA_TOKEN) {
   throw new Error(
-    "The NEXT_PUBLIC_TINA_CLIENT_ID environment variable is not set"
+    "The NEXT_PUBLIC_TINA_CLIENT_ID or TINA_TOKEN environment variables is not set"
   );
 }
 
