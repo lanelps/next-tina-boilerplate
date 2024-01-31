@@ -1,7 +1,19 @@
-export const dynamic = "force-dynamic"; // defaults to auto
-
-import client from "../../../../tina/__generated__/client";
+import path from "path";
+import dotenv from "dotenv";
+import client from "../../tina/__generated__/client";
 import algoliasearch from "algoliasearch";
+
+import type { Context } from "@netlify/functions";
+
+dotenv.config({
+  path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}.local`),
+});
+
+// Define the type of a post
+type Post = {
+  objectID: string;
+  title: string;
+};
 
 const getAllBlogPosts = async () => {
   const { data } = await client.queries.postConnection();
@@ -9,14 +21,14 @@ const getAllBlogPosts = async () => {
 };
 
 // Function to transform the posts
-const transformPosts = (posts) => {
+const transformPosts = (posts: any[]): Post[] => {
   return posts.map((post) => ({
     objectID: post.id,
     title: post.title,
   }));
 };
 
-export async function GET() {
+export default async (req: Request, context: Context) => {
   try {
     const posts = await getAllBlogPosts();
     const transformedPosts = transformPosts(posts);
@@ -39,11 +51,11 @@ export async function GET() {
     return new Response(
       `🎉 Sucessfully added ${
         algoliaResponse.objectIDs.length
-      } records to Algolia search.
-      Object IDs: ${algoliaResponse.objectIDs.join("\n")}`
+      } records to Algolia search. Object IDs:
+      ${algoliaResponse.objectIDs.join("\n")}`
     );
   } catch (error) {
     console.error(error);
     return new Response("There was an error");
   }
-}
+};
