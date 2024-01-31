@@ -1,54 +1,93 @@
-// import path from "path";
-// import dotenv from "dotenv";
-// import client from "../../../tina/__generated__/client";
-// import algoliasearch from "algoliasearch";
+import fs from "fs";
+import path from "path";
+import dotenv from "dotenv";
+import algoliasearch from "algoliasearch";
 
-// dotenv.config({
-//   path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}.local`),
-// });
+dotenv.config({
+  path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}.local`),
+});
 
-// const getAllBlogPosts = async () => {
-//   const { data } = await client.queries.postConnection();
-//   return data?.postConnection?.edges?.map((edge) => edge?.node) ?? [];
-// };
+const MY_CLIENT_ID = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
+const MY_BRANCH = "main";
 
-// // Function to transform the posts
-// const transformPosts = (posts) => {
-//   return posts.map((post) => ({
-//     objectID: post.id,
-//     title: post.title,
-//   }));
-// };
+const getTinaGraphQLVersion = async () => {
+  const pkgPath = path.join(
+    process.cwd(),
+    "node_modules",
+    "@tinacms/graphql",
+    "package.json"
+  );
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
+  return pkg.version.split(".").slice(0, 2).join(".");
+};
 
-export const onPostBuild = async function () {
-  console.log(`Test Post Build Plgin`);
-  // try {
-  //   const posts = await getAllBlogPosts();
-  //   const transformedPosts = transformPosts(posts);
+const getAllBlogPosts = async () => {
+  try {
+    const tinaGraphQLVersion = await getTinaGraphQLVersion();
+    const url = `https://content.tinajs.io/${tinaGraphQLVersion}/content/${MY_CLIENT_ID}/github/${MY_BRANCH}`;
 
-  //   // initialize the client with your environment variables
-  //   const algoliaClient = algoliasearch(
-  //     process.env.NEXT_PUBLIC_ALGOLIA_APP_ID ?? "",
-  //     process.env.ALGOLIA_SEARCH_ADMIN_KEY ?? ""
-  //   );
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("X-API-KEY", process.env.TINA_TOKEN);
 
-  //   // initialize the index with your index name
-  //   const index = algoliaClient.initIndex(
-  //     process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME ?? ""
-  //   );
+    const query = `
+      {
+        postConnection {
+          edges {
+            node {
+              id
+              title
+            }
+          }
+        }
+      }
+    `;
 
-  //   // save the objects!
-  //   const algoliaResponse = await index.saveObjects(transformedPosts);
+    const response = await fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        query,
+      }),
+    });
 
-  //   // check the output of the response in the console
-  //   return new Response(
-  //     `🎉 Sucessfully added ${
-  //       algoliaResponse.objectIDs.length
-  //     } records to Algolia search. Object IDs:
-  //     ${algoliaResponse.objectIDs.join("\n")}`
-  //   );
-  // } catch (error) {
-  //   console.error(error);
-  //   return new Response("There was an error");
-  // }
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const { data } = await response.json();
+
+    return (
+      data?.postConnection?.edges?.map(({ node }) => ({
+        objectID: node.id,
+        title: node.title,
+      })) ?? []
+    );
+  } catch (error) {
+    console.error("An error occurred while fetching blog posts:", error);
+    return [];
+  }
+};
+
+export const onPostBuild = async () => {
+  try {
+    const posts = await getAllBlogPosts();
+    console.log(`posts`, posts);
+
+    // initialize the client with your environment variables
+    const algoliaClient = algoliasearch(
+      process.env.NEXT_PUBLIC_ALGOLIA_APP_ID ?? "",
+      process.env.ALGOLIA_SEARCH_ADMIN_KEY ?? ""
+    );
+
+    // initialize the index with your index name
+    const index = algoliaClient.initIndex(
+      process.env.NEXT_PUBLIC_ALGOLIA_INDEX_NAME ?? ""
+    );
+
+    // save the objects!
+    await index.saveObjects(posts);
+  } catch (error) {
+    console.error(error);
+  }
 };
