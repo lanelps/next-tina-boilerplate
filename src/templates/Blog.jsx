@@ -21,20 +21,24 @@ const BlogTemplate = ({ data }) => {
 
         <div className="flex items-center justify-center gap-4">
           <p>Author: {author.name}</p>
-          <Image
-            className="overflow-hidden rounded-full"
-            width={64}
-            height={64}
-            src={author.profile}
-            alt={author.name}
-          />
-          <Image
-            className="overflow-hidden rounded-full"
-            width={64}
-            height={64}
-            src={author.image}
-            alt={author.name}
-          />
+          {author?.profile && (
+            <Image
+              className="overflow-hidden rounded-full"
+              width={64}
+              height={64}
+              src={author?.profile}
+              alt={author?.name}
+            />
+          )}
+          {author?.image && (
+            <Image
+              className="overflow-hidden rounded-full"
+              width={64}
+              height={64}
+              src={author?.image}
+              alt={author?.name}
+            />
+          )}
         </div>
 
         <ContentSection content={body} />
