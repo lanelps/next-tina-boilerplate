@@ -1,5 +1,7 @@
 import { getAllBlogPosts } from "../../utils/fetchData";
 
+export const dynamic = 'force-dynamic'
+
 const Blogs = async () => {
   const { data } = await getAllBlogPosts();
 

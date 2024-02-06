@@ -3,6 +3,8 @@ import BlogTemplate from "../../../templates/Blog";
 
 import { getBlogPostData } from "../../../utils/fetchData";
 
+export const dynamic = "force-dynamic";
+
 const Blog = async ({ params }) => {
   const { data } = await getBlogPostData(params.slug);
 
