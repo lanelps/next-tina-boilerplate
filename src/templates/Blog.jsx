@@ -1,8 +1,8 @@
 import { tinaField } from "tinacms/dist/react";
 import Image from "next/image";
 
-import ContentSection from "../components/blog/ContentSection";
-import Blocks from "../components/blog/Blocks";
+import ContentSection from "../components/ContentSection";
+import Slices from "../components/Slices";
 
 const BlogTemplate = ({ data }) => {
   if (!data) return <></>;
@@ -32,7 +32,7 @@ const BlogTemplate = ({ data }) => {
       </div>
 
       <ContentSection content={body} />
-      <Blocks blocks={sections} />
+      <Slices slices={sections} />
     </>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-import ContentSection from "../blog/ContentSection";
+import ContentSection from "../ContentSection";
 
 const Content = ({ data }) => (
   <section className="w-full bg-white p-8">
