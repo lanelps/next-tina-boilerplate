@@ -12,6 +12,9 @@ const Nav = () => {
           <li>
             <Link href="/posts">Posts</Link>
           </li>
+          <li>
+            <Link href="/search">Search</Link>
+          </li>
         </ul>
       </nav>
     </header>
