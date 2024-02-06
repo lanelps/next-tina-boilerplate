@@ -6,8 +6,7 @@ import Hero from "../blocks/Hero";
 // import { Testimonial } from "./blocks/testimonial";
 
 const Blocks = ({ blocks }) => (
-  <section className="border border-red-600">
-    <h2>Slices</h2>
+  <section className="w-full my-4 py-4 border-black border-t border-b flex flex-col gap-8">
     {blocks
       ? blocks.map((block, i) => {
           switch (block.__typename) {

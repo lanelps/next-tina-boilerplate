@@ -1,31 +1,31 @@
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 
-const PageSection = (props) => {
-  return (
-    <>
-      <h2>{props.heading}</h2>
-      <p>{props.content}</p>
-    </>
-  );
-};
-
 const NewsletterSignup = (props) => (
-  <>
-    <div>
+  <div className="py-4 my-4 border-t border-b">
+    <div className="rich-text mb-2">
       <TinaMarkdown content={props.children} />
     </div>
-    <div>
-      <form>
+    <form>
+      <div className="flex flex-col mb-2">
         <label htmlFor="email-address">Email address</label>
-        <input name="email-address" type="email" required />
-        <button type="submit">{props.buttonText}</button>
-      </form>
-    </div>
-  </>
+        <input
+          className="border border-black"
+          name="email-address"
+          type="email"
+          required
+        />
+      </div>
+      <button
+        className="p-2 bg-blue-100 border rounded-lg hover:bg-blue-300"
+        type="submit"
+      >
+        {props.buttonText}
+      </button>
+    </form>
+  </div>
 );
 
 const components = {
-  PageSection,
   // The "NewsletterSignup" key maps to a "template" defined
   // on our "rich-text" field
   NewsletterSignup,
@@ -33,11 +33,9 @@ const components = {
 
 const ContentSection = ({ content }) => {
   return (
-    <div className="relative py-16 overflow-hidden text-black bg-white">
-      <div className="relative px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto text-lg max-w-prose">
-          <TinaMarkdown components={components} content={content} />
-        </div>
+    <div className="relative w-full py-16 overflow-hidden bg-white">
+      <div className="mx-auto prose max-w-prose rich-text">
+        <TinaMarkdown components={components} content={content} />
       </div>
     </div>
   );
