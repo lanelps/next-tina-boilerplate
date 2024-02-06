@@ -94,11 +94,13 @@ export const onPostBuild = async () => {
     );
 
     // save the objects!
-    const algoliaResponse = await index.saveObjects(posts);
+    const algoliaResponse = await index.replaceAllObjects(posts);
 
     // check the output of the response in the console
     console.log(
-      `🎉 Sucessfully added ${algoliaResponse.objectIDs.length} record${algoliaResponse.objectIDs.length > 1 ? `s` : ``} to Algolia search.
+      `🎉 Sucessfully added ${algoliaResponse.objectIDs.length} record${
+        algoliaResponse.objectIDs.length > 1 ? `s` : ``
+      } to Algolia search.
           Object IDs: [
             ${algoliaResponse.objectIDs.join(",\n")}
           ]
