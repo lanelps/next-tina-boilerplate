@@ -8,6 +8,12 @@ const nextConfig = {
         port: "",
         pathname: `/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/**`,
       },
+      {
+        protocol: "https",
+        hostname: "sydneyreviewofbooks.com",
+        port: "",
+        pathname: `/wp-content/uploads/**`,
+      },
     ],
   },
 };

@@ -18,6 +18,11 @@ export const post: TinaCollection = {
       required: true,
     },
     {
+      type: "boolean",
+      name: "featured",
+      label: "Featured",
+    },
+    {
       name: "author",
       label: "Author",
       type: "reference",

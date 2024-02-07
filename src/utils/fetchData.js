@@ -45,12 +45,35 @@ export const getBlogPostData = async (slug) => {
   };
 };
 
-export const getReviewData = async (slug) => {
+export const getAllEssays = async () => {
   let data = {};
   let query = {};
-  let variables = { relativePath: `${slug}.mdx` };
+  let variables = {};
+
   try {
-    const res = await client.queries.review(variables);
+    const res = await client.queries.essayConnection(variables);
+    query = res.query;
+    data = res.data.essayConnection.edges.map(({ node }) => node);
+    variables = res.variables;
+  } catch (error) {
+    console.error(error);
+    notFound();
+  }
+
+  return {
+    variables: variables,
+    data: data,
+    query: query,
+  };
+};
+
+export const getEssayData = async (slug) => {
+  let data = {};
+  let query = {};
+  let variables = { relativePath: `${slug}.md` };
+
+  try {
+    const res = await client.queries.essay(variables);
     query = res.query;
     data = res.data;
     variables = res.variables;
